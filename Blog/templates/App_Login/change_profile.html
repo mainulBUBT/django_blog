@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title_block %} Login {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block body_block %}
+{% if changed %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+    </button>
+    Profile Updated Successfully!
+</div>
+{% else %}
+<h2>Update Your Information</h2>
+<form action="" method="post">
+    {{ form|crispy }}
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success btn-sm">Update</button>
+</form>
+{% endif %}
+{% endblock %}

@@ -22,15 +22,18 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'App_Login:logout' %}">Logout</a>
+        </li>
+        {% else %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'App_Login:register' %}">Register</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'App_Login:login' %}">Login</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
+        {% endif %}
       </ul>
     </div>
   </nav>

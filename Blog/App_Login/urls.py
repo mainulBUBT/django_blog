@@ -1,4 +1,3 @@
-from unicodedata import name
 from django.urls import path
 from App_Login import views
 
@@ -10,5 +9,8 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
     path('profile/', views.profile, name='profile'),
     path('change-profile/', views.user_change, name='user_change'),
-    path('password/', views.change_pass, name='change_pass')
+    path('password/', views.change_pass, name='change_pass'),
+    path('add_pro_pic/', views.add_pro_pic, name='add_pro_pic'),
+    path('change_pro_pic/', views.change_pro_pic, name='change_pro_pic'),
 ]
+

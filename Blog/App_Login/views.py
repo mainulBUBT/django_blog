@@ -1,5 +1,3 @@
-from unicodedata import name
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, logout, authenticate
@@ -7,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse
 
-from App_Login.forms import RegisterForm, UserProfileChangeForm
+from App_Login.forms import ProfilePicForm, RegisterForm, UserProfileChangeForm
 
 # Create your views here.
 
@@ -80,3 +78,26 @@ def change_pass(request):
             form.save()
             changed = True
     return render(request, 'App_Login/change_pass.html', context={'form': form, 'changed':changed})
+
+@login_required
+def add_pro_pic(request):
+    form = ProfilePicForm()
+
+    if request.method == 'POST':
+        form = ProfilePicForm(request.POST, request.FILES)
+        if form.is_valid():
+            user_object = form.save(commit=False)
+            user_object.user = request.user
+            form.save()
+            return HttpResponseRedirect(reverse('App_Login:profile'))
+
+    return render(request, 'App_Login/add_pro_pic.html', context={'form': form})
+
+def change_pro_pic(request):
+    form = ProfilePicForm(instance=request.user.user_profile)
+    if request.method == 'POST':
+        form = ProfilePicForm(request.POST, request.FILES, instance=request.user.user_profile)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('App_Login:profile'))
+    return render(request, 'App_Login/add_pro_pic.html', context={'form':form})
